@@ -31,13 +31,11 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
     try {
-        console.log(req.body.email);
         const user = await Users.findAll({
             where: {
                 email: req.body.email,
             },
         });
-        console.log(user);
 
         const match = await bcrypt.compare(req.body.password, user[0].password);
         if (!match) return res.status(400).json({ msg: 'Wrong Password' });
